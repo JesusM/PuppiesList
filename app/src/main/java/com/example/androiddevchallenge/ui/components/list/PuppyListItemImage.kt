@@ -13,11 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.androiddevchallenge.ui.theme
+package com.example.androiddevchallenge.ui.components.list
 
-import androidx.compose.ui.graphics.Color
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import coil.transform.CircleCropTransformation
+import com.example.androiddevchallenge.ui.components.common.PuppyImage
 
-val green200 = Color(0xFF80CBC4)
-val green500 = Color(0xFF009688)
-val green700 = Color(0xFF00796B)
-val yellow200 = Color(0xFFE6EE9C)
+@Composable
+fun PuppyListItemImage(
+    imageUrl: String,
+    imageLabel: String,
+    modifier: Modifier = Modifier,
+    contentDescription: String? = null
+) {
+    PuppyImage(
+        imageUrl,
+        imageLabel,
+        modifier,
+        contentDescription,
+        requestBuilder = { transformations(CircleCropTransformation()) }
+    )
+}

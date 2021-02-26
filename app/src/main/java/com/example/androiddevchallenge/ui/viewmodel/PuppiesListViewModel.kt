@@ -13,11 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.androiddevchallenge.ui.theme
+package com.example.androiddevchallenge.ui.viewmodel
 
-import androidx.compose.ui.graphics.Color
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 
-val green200 = Color(0xFF80CBC4)
-val green500 = Color(0xFF009688)
-val green700 = Color(0xFF00796B)
-val yellow200 = Color(0xFFE6EE9C)
+class PuppiesListViewModel : ViewModel() {
+    private val _puppiesList = MutableLiveData(puppies)
+    val puppiesList: LiveData<List<Puppy>> = _puppiesList
+}

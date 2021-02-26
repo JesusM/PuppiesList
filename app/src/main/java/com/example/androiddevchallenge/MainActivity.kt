@@ -18,12 +18,15 @@ package com.example.androiddevchallenge
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.example.androiddevchallenge.ui.components.PuppyList
+import com.example.androiddevchallenge.ui.components.detail.PuppyDetailBody
 import com.example.androiddevchallenge.ui.theme.MyTheme
+import com.example.androiddevchallenge.ui.viewmodel.puppies
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,8 +42,21 @@ class MainActivity : AppCompatActivity() {
 // Start building your app here!
 @Composable
 fun MyApp() {
-    Surface(color = MaterialTheme.colors.background) {
-        Text(text = "Ready... Set... GO!")
+    val navController = rememberNavController()
+    NavHost(navController, startDestination = "list") {
+        composable("list") { PuppyList(navController) }
+        composable("details/{itemId}") {
+            val itemId = it.arguments?.getString("itemId")
+            itemId?.let {
+                puppies.findLast { puppy ->
+                    puppy.id == it
+                }?.let { puppy ->
+                    PuppyDetailBody(puppy) {
+                        navController.popBackStack()
+                    }
+                }
+            }
+        }
     }
 }
 
